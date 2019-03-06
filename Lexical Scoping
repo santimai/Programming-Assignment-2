@@ -1,0 +1,27 @@
+
+
+makeVector <- function(x = numeric()) {
+    m <- NULL
+    set <- function(y) {
+        x <<- y
+        m <<- NULL
+    }
+    get <- function() x
+    setmean <- function(mean) m <<- mean
+    getmean <- function() m
+    list(set = set, get = get,
+         setmean = setmean,
+         getmean = getmean)
+}
+
+cacheSolve <- function(x, ...) {
+    inv <- x$getInverse()
+    if (!is.null(inv)) {
+        message("getting cached data")
+        return(inv)
+    }
+    matrix <- x$get()
+    inv <- solve(matrix, ...)
+    x$setInverse(inv)
+    inv
+}
